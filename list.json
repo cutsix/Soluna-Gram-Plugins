@@ -1,0 +1,214 @@
+{
+  "list": [
+    {
+      "name": "dm",
+      "version": "1.0",
+      "section": "chat",
+      "maintainer": "sunmoon",
+      "size": "2.5 KB",
+      "supported": true,
+      "des_short": "批量删除当前对话中自己发送的消息",
+      "des": "命令：,dm [数量]\\n说明：批量删除当前对话中自己发送的消息。回复某条消息使用时，会从该位置开始向后搜索自己的消息。"
+    },
+    {
+      "name": "dme",
+      "version": "1.0",
+      "section": "chat",
+      "maintainer": "sunmoon",
+      "size": "23.5 KB",
+      "supported": true,
+      "des_short": "智能防撤回删除自己发送的消息",
+      "des": "命令：,dme [数量|help]\\n说明：批量删除自己的消息。媒体消息会优先尝试替换为防撤回图片，再进行删除。"
+    },
+    {
+      "name": "eat",
+      "version": "1.0",
+      "section": "media",
+      "maintainer": "sunmoon",
+      "size": "23.4 KB",
+      "supported": true,
+      "des_short": "生成吃头像图片，内置基础模板",
+      "des": "命令：,eat [username/uid] [参数]\\n说明：根据用户头像生成吃头像图片。插件仓库已附带基础模板 1-6，更多模板可通过远程配置扩展。"
+    },
+    {
+      "name": "fadian",
+      "version": "1.0",
+      "section": "entertainment",
+      "maintainer": "sunmoon",
+      "size": "8.9 KB",
+      "supported": true,
+      "des_short": "快速生成发电小作文",
+      "des": "命令：,fadian [名字]\\n说明：对指定对象快速生成一段发电文案。当前版本为纯单文件实现，不依赖远程数据文件。"
+    },
+    {
+      "name": "fd",
+      "version": "1.0",
+      "section": "chat",
+      "maintainer": "sunmoon",
+      "size": "6.6 KB",
+      "supported": true,
+      "des_short": "复读回复消息，支持限制开关",
+      "des": "命令：,r [次数|on_limit|off_limit]；,res [数量]\\n说明：复读回复的消息，或从回复位置开始复读多条消息。"
+    },
+    {
+      "name": "his",
+      "version": "1.0",
+      "section": "utility",
+      "maintainer": "sunmoon",
+      "size": "9.0 KB",
+      "supported": true,
+      "des_short": "查询指定用户在群内的发言历史",
+      "des": "命令：-his <user> [-n <num>] [-p <page>]\\n说明：查询用户在当前群组中的历史消息，也支持直接回复某条消息使用。"
+    },
+    {
+      "name": "join",
+      "version": "1.0",
+      "section": "utility",
+      "maintainer": "sunmoon",
+      "size": "1.4 KB",
+      "supported": true,
+      "des_short": "查询用户入群时间",
+      "des": "命令：,join\\n说明：回复某位用户的消息后使用，查询该用户加入当前群组的时间。"
+    },
+    {
+      "name": "kfcv50",
+      "version": "1.0",
+      "section": "daily",
+      "maintainer": "sunmoon",
+      "size": "1.8 KB",
+      "supported": true,
+      "des_short": "获取疯狂星期四文案",
+      "des": "命令：,kfc\\n说明：从多个接口随机获取一条疯狂星期四文案。"
+    },
+    {
+      "name": "moyu",
+      "version": "1.0",
+      "section": "daily",
+      "maintainer": "sunmoon",
+      "size": "1.9 KB",
+      "supported": true,
+      "des_short": "获取摸鱼日报图片",
+      "des": "命令：,moyu\\n说明：获取并发送当天的摸鱼日报图片。"
+    },
+    {
+      "name": "news",
+      "version": "1.0",
+      "section": "daily",
+      "maintainer": "sunmoon",
+      "size": "7.1 KB",
+      "supported": true,
+      "des_short": "获取每日新闻资讯包",
+      "des": "命令：,news；,news help\\n说明：获取每日新闻、历史上的今天、成语、名言和诗词等资讯。"
+    },
+    {
+      "name": "parsehub",
+      "version": "1.0",
+      "section": "utility",
+      "maintainer": "sunmoon",
+      "size": "14.3 KB",
+      "supported": true,
+      "des_short": "调用 @ParseHubot 解析主流平台链接",
+      "des": "命令：,parsehub <链接>\\n说明：依赖 @ParseHubot 解析抖音、B 站、YouTube、Twitter、Instagram 等平台的链接内容。"
+    },
+    {
+      "name": "pic_to_sticker",
+      "version": "1.0",
+      "section": "media",
+      "maintainer": "sunmoon",
+      "size": "1.7 KB",
+      "supported": true,
+      "des_short": "将回复的图片转换为贴纸",
+      "des": "命令：,pts\\n说明：回复一张图片后，将其转换为贴纸并发送。"
+    },
+    {
+      "name": "portball",
+      "version": "1.0",
+      "section": "moderation",
+      "maintainer": "sunmoon",
+      "size": "3.8 KB",
+      "supported": true,
+      "des_short": "临时禁言回复的用户",
+      "des": "命令：,portball [理由] <时间>\\n说明：回复某位用户后临时禁言，支持 30m / 2h / 1d / 1w 这类时长参数。"
+    },
+    {
+      "name": "qn",
+      "version": "1.0",
+      "section": "media",
+      "maintainer": "sunmoon",
+      "size": "53.6 KB",
+      "supported": true,
+      "des_short": "把消息生成引用贴纸",
+      "des": "命令：,qn [n]；,qnset [add/del/list] [自定义用户名]\\n说明：将回复的消息生成引用贴纸，并支持管理引用时使用的自定义用户名。"
+    },
+    {
+      "name": "rate",
+      "version": "1.0",
+      "section": "utility",
+      "maintainer": "sunmoon",
+      "size": "6.7 KB",
+      "supported": true,
+      "des_short": "查询货币汇率",
+      "des": "命令：,rate [from] [to] [num]；,hl [from] [to] [num]\\n说明：查询货币汇率，支持常见法币和数字货币。"
+    },
+    {
+      "name": "speed_maomi",
+      "version": "1.0",
+      "section": "utility",
+      "maintainer": "sunmoon",
+      "size": "5.7 KB",
+      "supported": true,
+      "des_short": "运行 Speedtest CLI 测速",
+      "des": "命令：,sv；,sv list；,sv <server id>\\n说明：自动下载 Speedtest CLI 到插件目录并执行测速。"
+    },
+    {
+      "name": "ss",
+      "version": "1.0",
+      "section": "entertainment",
+      "maintainer": "sunmoon",
+      "size": "3.9 KB",
+      "supported": true,
+      "des_short": "随机发送视频",
+      "des": "命令：,ss\\n说明：从预设频道随机抽取一个符合条件的视频发送。"
+    },
+    {
+      "name": "sst",
+      "version": "1.0",
+      "section": "entertainment",
+      "maintainer": "sunmoon",
+      "size": "3.4 KB",
+      "supported": true,
+      "des_short": "随机发送图片，支持 NSFW 剧透",
+      "des": "命令：,sst [18]\\n说明：从预设频道随机抽取一张图片发送，带参数时会启用防剧透，并可切换 NSFW 频道组。"
+    },
+    {
+      "name": "sticker",
+      "version": "1.0",
+      "section": "media",
+      "maintainer": "sunmoon",
+      "size": "18.3 KB",
+      "supported": true,
+      "des_short": "保存贴纸到自己的贴纸包",
+      "des": "命令：,s [help/贴纸包名/cancel/list/set/del]\\n说明：将回复的贴纸保存到自己的贴纸包，并支持默认包、快捷命名和记录管理。"
+    },
+    {
+      "name": "trace",
+      "version": "1.0",
+      "section": "moderation",
+      "maintainer": "sunmoon",
+      "size": "21.5 KB",
+      "supported": true,
+      "des_short": "给用户或关键词自动挂反应",
+      "des": "命令：,trace ...\\n说明：为当前群组中的用户或关键词绑定自动反应，支持状态查看、清理、日志和大反应开关。"
+    },
+    {
+      "name": "when",
+      "version": "1.0",
+      "section": "utility",
+      "maintainer": "sunmoon",
+      "size": "5.3 KB",
+      "supported": true,
+      "des_short": "查询账号年龄、注册年月和共同群组",
+      "des": "命令：,when [username/id]\\n说明：查询官方返回的注册年月、账号年龄、共同群组和入群时间等信息。"
+    }
+  ]
+}
