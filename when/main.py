@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 # pgp-plugin作者: sunmoon
 from datetime import datetime
+from typing import Optional, Tuple
 
 from pyrogram import Client
 
@@ -98,7 +99,7 @@ def build_display_name(target) -> str:
     return full_name or NOT_FOUND
 
 
-def format_username(username: str | None) -> str:
+def format_username(username: Optional[str]) -> str:
     return f"@{username}" if username else NOT_FOUND
 
 
@@ -111,7 +112,7 @@ def format_premium(target) -> str:
     return "True" if getattr(target, "is_premium", False) else "False"
 
 
-def format_registration_month(registration_month: str | None) -> str:
+def format_registration_month(registration_month: Optional[str]) -> str:
     if not registration_month:
         return NOT_FOUND
 
@@ -124,7 +125,7 @@ def format_registration_month(registration_month: str | None) -> str:
         return registration_month
 
 
-def format_age_from_registration_month(registration_month: str | None) -> tuple[str, int]:
+def format_age_from_registration_month(registration_month: Optional[str]) -> Tuple[str, int]:
     if not registration_month:
         return NOT_FOUND, 0
 
