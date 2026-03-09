@@ -202,13 +202,13 @@
     },
     {
       "name": "when",
-      "version": "1.1",
+      "version": "1.2",
       "section": "utility",
       "maintainer": "sunmoon",
-      "size": "5.3 KB",
+      "size": "10.9 KB",
       "supported": true,
       "des_short": "查询账号年龄、注册年月和共同群组",
-      "des": "命令：,when [username/id]\\n说明：查询官方返回的注册年月、账号年龄、共同群组和入群时间等信息。"
+      "des": "命令：,when [username/id]\\n说明：优先查询官方注册年月，官方为空时使用本地估算兜底，并在官方命中时异步上报样本数据。"
     }
   ]
 }
