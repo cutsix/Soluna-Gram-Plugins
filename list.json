@@ -1,6 +1,26 @@
 {
   "list": [
     {
+      "name": "cosplay",
+      "version": "1.0",
+      "section": "entertainment",
+      "maintainer": "sunmoon",
+      "size": "7.4 KB",
+      "supported": true,
+      "des_short": "随机获取 cosplay 套图图片并以防剧透形式发送",
+      "des": "命令：,cosplay [数量]；,cos [数量]\\n说明：从 cosplaytele.com 随机选择一个套图，抽取指定数量图片并发送，默认启用防剧透。"
+    },
+    {
+      "name": "dc",
+      "version": "1.0",
+      "section": "utility",
+      "maintainer": "sunmoon",
+      "size": "3.4 KB",
+      "supported": true,
+      "des_short": "查看单个用户或当前群组成员的 DC 分布",
+      "des": "命令：,dc；,dc force\\n说明：回复用户时查看对方所在 DC，在群组中可统计成员的 DC1-DC5 分布，超 10k 需 force。"
+    },
+    {
       "name": "dm",
       "version": "1.0",
       "section": "chat",
@@ -199,6 +219,16 @@
       "supported": true,
       "des_short": "给用户或关键词自动挂反应",
       "des": "命令：,trace ...\\n说明：为当前群组中的用户或关键词绑定自动反应，支持状态查看、清理、日志和大反应开关。"
+    },
+    {
+      "name": "timename",
+      "version": "1.0",
+      "section": "utility",
+      "maintainer": "sunmoon",
+      "size": "2.1 KB",
+      "supported": true,
+      "des_short": "按北京时间自动更新时间样式昵称",
+      "des": "命令：无\\n说明：每分钟自动运行，将北京时间转为样式数字并附带时段表情，更新到 Telegram 资料的 last_name。"
     },
     {
       "name": "when",
