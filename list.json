@@ -81,6 +81,16 @@
       "des": "命令：-his <user> [-n <num>] [-p <page>]\\n说明：查询用户在当前群组中的历史消息，也支持直接回复某条消息使用。"
     },
     {
+      "name": "ip",
+      "version": "1.0",
+      "section": "utility",
+      "maintainer": "sunmoon",
+      "size": "3.3 KB",
+      "supported": true,
+      "des_short": "查询 IP 或域名的归属地与网络信息",
+      "des": "命令：,ip [ip/域名]\\n说明：支持直接输入或回复一条包含链接、域名、IP 的消息进行查询，返回地区、经纬度、ISP、组织和 ASN 等信息。"
+    },
+    {
       "name": "join",
       "version": "1.0",
       "section": "utility",
