@@ -249,6 +249,26 @@
       "supported": true,
       "des_short": "查询账号年龄、注册年月和共同群组",
       "des": "命令：,when [username/id]\\n说明：优先查询官方注册年月，官方为空时使用本地估算兜底，并在官方命中时异步上报样本数据。"
+    },
+    {
+      "name": "sticker_to_pic",
+      "version": "1.0",
+      "section": "media",
+      "maintainer": "sunmoon",
+      "size": "1.2 KB",
+      "supported": true,
+      "des_short": "将回复的静态贴纸转换为图片",
+      "des": "命令：,stp [任意参数]\\n说明：回复一个静态贴纸后使用，默认以图片消息发送；带任意参数时改为以 PNG 原图文档发送。"
+    },
+    {
+      "name": "shortcuts",
+      "version": "1.0",
+      "section": "utility",
+      "maintainer": "sunmoon",
+      "size": "9.2 KB",
+      "supported": true,
+      "des_short": "保存并发送常用快捷短语",
+      "des": "命令：,sc <名称>；,sc save <名称>；,sc remove <名称>；,sc list；,schelp\\n说明：回复一条带文字的消息后保存为快捷方式，发送时会尽量保留原始文本实体、自定义表情和网页预览设置。"
     }
   ]
 }
