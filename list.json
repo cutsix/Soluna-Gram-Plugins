@@ -265,7 +265,7 @@
       "version": "1.0",
       "section": "utility",
       "maintainer": "sunmoon",
-      "size": "9.2 KB",
+      "size": "9.7 KB",
       "supported": true,
       "des_short": "保存并发送常用快捷短语",
       "des": "命令：,sc <名称>；,sc save <名称>；,sc remove <名称>；,sc list；,schelp\\n说明：回复一条带文字的消息后保存为快捷方式，发送时会尽量保留原始文本实体、自定义表情和网页预览设置。"

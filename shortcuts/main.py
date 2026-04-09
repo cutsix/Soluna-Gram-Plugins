@@ -15,6 +15,25 @@ from solgram.utils import alias_command
 SHORTCUTS_KEY = "shortcuts"
 
 
+def serialize_entity_type(entity_type) -> str:
+    if isinstance(entity_type, str):
+        return entity_type
+    if getattr(entity_type, "name", None):
+        return entity_type.name
+    with contextlib.suppress(Exception):
+        return MessageEntityType(entity_type).name
+    return str(entity_type)
+
+
+def deserialize_entity_type(entity_type: str):
+    if not isinstance(entity_type, str):
+        return entity_type
+    normalized = entity_type.rsplit(".", 1)[-1].upper()
+    if normalized in MessageEntityType.__members__:
+        return MessageEntityType[normalized]
+    return entity_type
+
+
 def get_all_shortcuts() -> Dict[str, Dict]:
     raw = sqlite.get(SHORTCUTS_KEY, "{}")
     if isinstance(raw, dict):
@@ -32,7 +51,7 @@ def serialize_entities(entities: Optional[List[MessageEntity]]) -> List[Dict]:
     serialized = []
     for entity in entities or []:
         item = {
-            "type": getattr(entity.type, "value", str(entity.type)),
+            "type": serialize_entity_type(entity.type),
             "offset": entity.offset,
             "length": entity.length,
         }
@@ -57,10 +76,7 @@ async def deserialize_entities(
                 "offset": int(item["offset"]),
                 "length": int(item["length"]),
             }
-            try:
-                entity_kwargs["type"] = MessageEntityType(item["type"])
-            except Exception:
-                entity_kwargs["type"] = item["type"]
+            entity_kwargs["type"] = deserialize_entity_type(item["type"])
             for field in ("url", "language", "custom_emoji_id", "expandable"):
                 if item.get(field) is not None:
                     entity_kwargs[field] = item[field]
