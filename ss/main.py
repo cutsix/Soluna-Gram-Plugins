@@ -14,6 +14,8 @@ channel_groups = {
     "default": [
         "sunmoonvedio",
         "ndggboomle",
+        "EnjoyJK",
+        "SlackPool",
     ]
 }
 

@@ -13,6 +13,7 @@ channel_groups = {
         "titswiki_sfw",
         "meizitu3",
         "meinv00857",
+        "EnjoyJK",
         "ZZDXJJ"
     ],
     "NSFW": [
