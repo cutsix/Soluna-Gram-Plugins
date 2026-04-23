@@ -12,11 +12,13 @@ from shutil import rmtree
 from httpx import ReadTimeout
 from solgram.listener import listener
 from solgram.enums import Client, Message, AsyncClient
+from solgram.single_utils import sqlite
 from solgram.utils import lang
 
 PLUGIN_DIR = Path(__file__).resolve().parent
 SPEEDTEST_DIR = PLUGIN_DIR / "speedtest-cli"
 speedtest_path = SPEEDTEST_DIR / "speedtest"
+DEFAULT_SERVER_KEY = "speed_maomi.default-server-id"
 
 
 def decode_output(data):
@@ -82,6 +84,31 @@ def safe_remove(filepath):
             os.remove(filepath)
     except Exception as e:
         print(f"Error removing file {filepath}: {e}")
+
+
+def get_default_server_id():
+    value = sqlite.get(DEFAULT_SERVER_KEY, "")
+    if value is None:
+        return ""
+    value = str(value).strip()
+    return value if value.isdigit() else ""
+
+
+def save_default_server_id(server_id):
+    sqlite[DEFAULT_SERVER_KEY] = str(server_id)
+
+
+def clear_default_server_id():
+    if sqlite.get(DEFAULT_SERVER_KEY, None) is not None:
+        del sqlite[DEFAULT_SERVER_KEY]
+
+
+def find_server_by_id(servers, server_id):
+    target_id = str(server_id).strip()
+    for server in servers or []:
+        if str(server.get("id", "")).strip() == target_id:
+            return server
+    return None
 
 async def download_cli(request, force=False):
     speedtest_version = "1.2.0"
@@ -163,15 +190,20 @@ async def ensure_cli(request, force=False):
     return await download_cli(request, force=force)
 
 
-async def run_speedtest(request: AsyncClient, message: Message):
+async def run_speedtest(request: AsyncClient, message: Message, server_id=""):
     setup_error = await ensure_cli(request)
     if setup_error:
         return setup_error, None
 
     message_args = (message.arguments or "").strip()
     arguments = ["--accept-license", "--accept-gdpr", "-f", "json"]
-    if message_args.isdigit():
-        arguments[2:2] = ["-s", message_args]
+    selected_server_id = str(server_id).strip()
+    if not selected_server_id and message_args.isdigit():
+        selected_server_id = message_args
+    if not selected_server_id:
+        selected_server_id = get_default_server_id()
+    if selected_server_id:
+        arguments[2:2] = ["-s", selected_server_id]
 
     outs, errs, code = await start_speedtest(arguments)
     detail = trim_error_detail(errs or outs)
@@ -228,7 +260,7 @@ async def run_speedtest(request: AsyncClient, message: Message):
             c.save("speedtest.png")
     return des, "speedtest.png" if exists("speedtest.png") else None
 
-async def get_all_ids(request):
+async def get_speedtest_servers(request):
     """ Get speedtest_server. """
     setup_error = await ensure_cli(request)
     if setup_error:
@@ -253,32 +285,91 @@ async def get_all_ids(request):
         result = loads(outs)
     except Exception as e:
         return f"测速节点解析失败：{e}", None
+    servers = result.get("servers", []) if isinstance(result, dict) else []
+    return None, servers if isinstance(servers, list) else []
+
+
+async def get_all_ids(request):
+    error, servers = await get_speedtest_servers(request)
+    if error:
+        return error, None
+    if not servers:
+        return "附近没有测速节点", None
+    lines = ["附近测速节点："]
+    default_server_id = get_default_server_id()
+    if default_server_id:
+        default_server = find_server_by_id(servers, default_server_id)
+        if default_server:
+            lines.append(
+                f"当前默认测速节点：`{default_server_id}` - "
+                f"`{default_server.get('name', '未知节点')}` - "
+                f"`{default_server.get('location', '未知区域')}`"
+            )
+        else:
+            lines.append(f"当前默认测速节点：`{default_server_id}`")
+    lines.append("使用 `sv set <id>` 设置默认测速点，使用 `sv set clear` 清除。")
+    lines.append("")
+    lines.extend(
+        f"`{i['id']}` - `{i['name']}` - `{i['location']}`"
+        for i in servers
+    )
+    return "\n".join(lines), None
+
+
+async def set_default_speedtest_server(request, server_id):
+    error, servers = await get_speedtest_servers(request)
+    if error:
+        return error
+    server = find_server_by_id(servers, server_id)
+    if not server:
+        return "没有找到这个测速节点，请先使用 `sv list` 查看可用节点。"
+    save_default_server_id(server_id)
     return (
-        (
-            "附近测速节点：\n"
-            + "\n".join(
-                f"`{i['id']}` - `{i['name']}` - `{i['location']}`"
-                for i in result['servers']
-            ),
-            None,
-        )
-        if result
-        else ("附近没有测速节点", None)
+        f"已将默认测速节点设置为 `{server_id}` - "
+        f"`{server.get('name', '未知节点')}` - "
+        f"`{server.get('location', '未知区域')}`"
     )
 
 @listener(command="sv",
           need_admin=True,
           description=lang('speedtest_des'),
-          parameters="(list/server id)")
+          parameters="[list|<server id>|set <server id>|set clear]")
 async def speedtest(client: Client, message: Message, request: AsyncClient):
     """ Tests internet speed using speedtest. """
     msg = message
     message_args = (message.arguments or "").strip()
-    if message_args == "list":
+    args = message_args.split()
+    lowered_args = message_args.lower()
+
+    if lowered_args == "list":
         des, photo = await get_all_ids(request)
+    elif args and args[0].lower() == "set":
+        if len(args) == 1:
+            default_server_id = get_default_server_id()
+            if default_server_id:
+                des = (
+                    f"当前默认测速节点：`{default_server_id}`\n"
+                    "使用 `sv set clear` 清除，或使用 `sv set <id>` 重新设置。"
+                )
+            else:
+                des = "当前没有默认测速节点，请先使用 `sv list` 查看节点。"
+            photo = None
+        elif len(args) == 2 and args[1].lower() == "clear":
+            clear_default_server_id()
+            des = "已清除默认测速节点，下次 `sv` 将继续由 Speedtest 自动选点。"
+            photo = None
+        elif len(args) == 2 and args[1].isdigit():
+            des = await set_default_speedtest_server(request, args[1])
+            photo = None
+        else:
+            return await msg.edit(lang('arg_error'))
     elif len(message_args) == 0 or message_args.isdigit():
-        msg: Message = await message.edit("猫咪努力的挣脱毛线球，开始汇聚元气...")
-        des, photo = await run_speedtest(request, message)
+        selected_server_id = message_args if message_args.isdigit() else get_default_server_id()
+        status_text = "猫咪努力的挣脱毛线球，开始汇聚元气..."
+        if selected_server_id:
+            status_text += f"\n目标节点：`{selected_server_id}`"
+        msg: Message = await message.edit(status_text)
+        des, photo = await run_speedtest(request, message, selected_server_id)
     else:
         return await msg.edit(lang('arg_error'))
     if not photo:
